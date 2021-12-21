@@ -7,7 +7,7 @@ Outil Cache Global pour le Framework ItsMyConsole
 - [Pourquoi faire ?](#pourquoi-faire-)
 - [Getting Started](#getting-started)
 - [Comment se servir de l'outil ?](#comment-se-servir-de-loutil-)
-- [Ajout de données dans le cache](#ajout-de-données-dans-le-cache)
+- [Ajout ou modification d'une donnée dans le cache](#ajout-ou-modification-dune-donnée-dans-le-cache)
 - [Récupération des données du cache](#récupération-des-données-du-cache)
 - [Suppression des données du cache](#suppression-des-données-du-cache)
 - [Tester la présence de la clé dans le cache](#tester-la-présence-de-la-clé-dans-le-cache)
@@ -57,12 +57,12 @@ namespace MyExampleConsole
             {
                 string value = tools.CommandMatch.Groups[1].Value;
                 const string key = "<KEY>";
-                if(tools.GlobalCache().Contains(key))
+                if (tools.GlobalCache().Contains(key))
                 {
                     string oldValue = tools.GlobalCache().Get<string>(key);
                     Console.WriteLine($"Old value: {oldValue}");  
                 }
-                tools.GlobalCache().Update(key, value)
+                tools.GlobalCache().Update(key, value);
                 Console.WriteLine("Global cache updated");
             });
             
@@ -99,10 +99,36 @@ Dans cet exemple, il lit et met à jour le cache sur une seule et unique clé **
 Maintenant que l'on a configuré la Console et l'implémentation des actions, l'utilisation de ```RunAsync``` lance la mise en attente d'une saisie de commande par l'utilisateur.
 
 ## Comment se servir de l'outil ?
-*coming soon*
 
-## Ajout de données dans le cache
-*coming soon*
+Vous pouvez accéder à l'outil Global Cache lorsque vous ajoutez une interprétation de commande avec ```AddCommand```.
+
+```cs
+ConsoleCommandLineInterpreter ccli = new ConsoleCommandLineInterpreter();
+
+// Add command
+ccli.AddCommand("<PATERN>", tools => 
+{
+    string value = tools.GlobalCache().Get<string>("<KEY>");
+});
+```
+
+Vous devez ajouter ```using ItsMyConsole.Tools.GlobalCache;``` pour avoir accès a l'outil Global Cache depuis ```tools``` de ```AddCommand```.
+
+## Ajout ou modification d'une donnée dans le cache
+
+Vous pouvez ajouter ou modifier des données dans le cache en utilisant ```Update```.
+
+| Propriété | Description |
+| :-------- | :---------- |
+| key | La clé unique qui représente la donnée dans le cache |
+| value | La valeur à ajouter ou mettre à jour dans le cache associée à la clé |
+
+```cs
+ccli.AddCommand("<PATERN>", tools => 
+{
+    tools.GlobalCache().Update("<KEY>", "My Value in cache");
+});
+```
 
 ## Récupération des données du cache
 *coming soon*
