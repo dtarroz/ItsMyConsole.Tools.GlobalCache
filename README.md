@@ -1,7 +1,7 @@
 ![Logo](docs/logo.png)
 
 # ItsMyConsole.Tools.GlobalCache
-Outil Cache Global pour le Framework ItsMyConsole
+Outil de cache global depuis toutes les interprétations de ligne de commande pour le Framework [```ItsMyConsole```](https://github.com/dtarroz/ItsMyConsole)
 
 ## Sommaire
 - [Pourquoi faire ?](#pourquoi-faire-)
@@ -10,8 +10,6 @@ Outil Cache Global pour le Framework ItsMyConsole
 - [Ajout ou modification d'une donnée dans le cache](#ajout-ou-modification-dune-donnée-dans-le-cache)
 - [Récupération des données du cache](#récupération-des-données-du-cache)
 - [Suppression des données du cache](#suppression-des-données-du-cache)
-- [Tester la présence de la clé dans le cache](#tester-la-présence-de-la-clé-dans-le-cache)
-- [Récupération de toutes les clés contenues dans le cache](#récupération-de-toutes-les-clés-contenues-dans-le-cache)
 
 ## Pourquoi faire ?
 Vous allez pouvoir étendre le Framework pour application Console .Net [```ItsMyConsole```](https://github.com/dtarroz/ItsMyConsole) avec un outil pour mettre en cache des données accessibles depuis toutes les interprétations de ligne de commande.
@@ -20,8 +18,6 @@ L'outil ```ItsMyConsole.Tools.GlobalCache``` met à disposition :
  - L'ajout de données en cache associé à une clé unique
  - La lecture des données en cache à partir d'une clé
  - La suppression des données du cache associés à une clé
- - La vérification de la présence d'une clé contenue dans le cache
- - La récupération de toutes les clés contenues dans le cache
 
 ## Getting Started
 1. Créer un projet **"Application Console .Net"** avec le nom *"MyExampleConsole"*
@@ -56,13 +52,9 @@ namespace MyExampleConsole
             ccli.AddCommand("^set (.+)$", RegexOptions.IgnoreCase, tools => 
             {
                 string value = tools.CommandMatch.Groups[1].Value;
-                const string key = "<KEY>";
-                if (tools.GlobalCache().Contains(key))
-                {
-                    string oldValue = tools.GlobalCache().Get<string>(key);
+                if (tools.GlobalCache().TryGetValue<string>("<KEY>", out string oldValue))
                     Console.WriteLine($"Old value: {oldValue}");  
-                }
-                tools.GlobalCache().Update(key, value);
+                tools.GlobalCache().Set("<KEY>", value);
                 Console.WriteLine("Global cache updated");
             });
             
@@ -90,9 +82,9 @@ Puis avec le premier ```AddCommand```, on a ajouté un pattern d’interprétati
 
 Et avec le deuxième ```AddCommand```, on a ajouté un pattern d’interprétation des lignes de commande ```^get$``` *(seulement **"get"**)*  qui est insensible à la casse ```RegexOptions.IgnoreCase```.
 
-Lors de l'exécution de la Console, si on saisit une commande qui commence par **"set"** avec un texte à la suite, il lancera l'implémentation de l'action associée (le premier ```AddCommand```). Il commencera à lire le texte saisi (qui sera la nouvelle valeur à mettre en cache) en utilisant ```tools.CommandMatch``` depuis les outils disponibles *(résultat du Match de l'expression régulière)*. Ensuite il vérifie si on a déjà une valeur en cache ```tools.GlobalCache().Contains```, si c'est le cas, il récupére la valeur ```tools.GlobalCache().Get``` et il affiche le résultat (*"Old value"*) puis il met à jour le cache avec la nouvelle valeur ```tools.GlobalCache().Update```.
+Lors de l'exécution de la Console, si on saisit une commande qui commence par **"set"** avec la valeur à mettre en cache, il lancera l'implémentation de l'action associée (le premier ```AddCommand```). Il commence à lire le texte saisi (qui est la nouvelle valeur à mettre en cache) en utilisant ```tools.CommandMatch``` depuis les outils disponibles *(résultat du Match de l'expression régulière)*. Ensuite il récupére et vérifie si on a déjà une valeur en cache ```tools.GlobalCache().TryGetValue```, si c'est le cas, il affiche le résultat (*"Old value"*) puis il met à jour le cache avec la nouvelle valeur ```tools.GlobalCache().Set```.
 
-Si on saisit la commande **"get"**, il lancera l'implémentation de l'action associée (le deuxième ```AddCommand```). Il lira le cache ```tools.GlobalCache().Get``` et affichera la valeur obtenue.
+Si on saisit la commande **"get"**, il lancera l'implémentation de l'action associée (le deuxième ```AddCommand```). Il lit le cache ```tools.GlobalCache().Get``` et affiche la valeur obtenue.
 
 Dans cet exemple, il lit et met à jour le cache sur une seule et unique clé **"&lt;KEY&gt;"** qui est accessible sur plusieurs actions configurées.
 
@@ -116,7 +108,7 @@ Vous devez ajouter ```using ItsMyConsole.Tools.GlobalCache;``` pour avoir accès
 
 ## Ajout ou modification d'une donnée dans le cache
 
-Vous pouvez ajouter ou modifier des données dans le cache en utilisant ```Update```.
+Vous pouvez ajouter ou modifier des données dans le cache en utilisant ```Set```.
 
 | Propriété | Description |
 | :-------- | :---------- |
@@ -126,18 +118,55 @@ Vous pouvez ajouter ou modifier des données dans le cache en utilisant ```Updat
 ```cs
 ccli.AddCommand("<PATERN>", tools => 
 {
-    tools.GlobalCache().Update("<KEY>", "My Value in cache");
+    tools.GlobalCache().Set("<KEY>", "My Value in cache");
 });
 ```
 
 ## Récupération des données du cache
-*coming soon*
+
+Vous pouvez récupérer une donnée dans le cache associé à une clé en utilisant ```Get```.
+
+| Propriété | Description |
+| :-------- | :---------- |
+| key | La clé unique qui représente la donnée dans le cache |
+
+```cs
+ccli.AddCommand("<PATERN>", tools => 
+{
+    string value = tools.GlobalCache().Get<string>("<KEY>");
+});
+```
+
+Vous avez aussi la possibilité de tester la présence de la clé dans le cache avant de récupérer sa valeur en utilisant ```TryGetValue```.
+
+| Propriété | Description |
+| :-------- | :---------- |
+| key | La clé unique qui représente la donnée dans le cache |
+| *out* value | La valeur en cache si la clé associée existe |
+
+Si la clé existe dans le cache, il retourne ```true``` avec son contenu dans ```value```.
+
+```cs
+ccli.AddCommand("<PATERN>", tools => 
+{
+    if (tools.GlobalCache().TryGetValue<string>("<KEY>", out string value))
+    {
+        // Insert your code here
+    }
+});
+```
 
 ## Suppression des données du cache
-*coming soon*
 
-## Tester la présence de la clé dans le cache
-*coming soon*
+Vous pouvez supprimer une donnée du cache associé à une clé en utilisant ```Remove```.
 
-## Récupération de toutes les clés contenues dans le cache
-*coming soon*
+| Propriété | Description |
+| :-------- | :---------- |
+| key | La clé unique qui représente la donnée dans le cache |
+
+```cs
+ccli.AddCommand("<PATERN>", tools => 
+{
+    tools.GlobalCache().Remove("<KEY>");
+});
+```
