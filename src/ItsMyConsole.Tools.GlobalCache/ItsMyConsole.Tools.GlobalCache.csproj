@@ -2,8 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Title>ItsMyConsole.Tools.GlobalCache</Title>
+    <Authors>Damien TARROZ</Authors>
+    <Description>Outil de cache global depuis toutes les interprétations de ligne de commande pour le Framework ItsMyConsole</Description>
+    <Copyright>Copyright © 2021 Damien TARROZ</Copyright>
+    <PackageProjectUrl>https://github.com/dtarroz/ItsMyConsole.Tools.GlobalCache</PackageProjectUrl>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>console cli cache</PackageTags>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\docs\logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\ItsMyConsole.Tools.GlobalCache.xml</DocumentationFile>
