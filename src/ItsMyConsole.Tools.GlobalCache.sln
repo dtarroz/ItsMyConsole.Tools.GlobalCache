@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsMyConsole.Tools.GlobalCache", "ItsMyConsole.Tools.GlobalCache\ItsMyConsole.Tools.GlobalCache.csproj", "{318F8852-D77C-40F1-ABE1-7746A31F171C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsMyConsole.Tools.GlobalCache.Tests", "ItsMyConsole.Tools.GlobalCache.Tests\ItsMyConsole.Tools.GlobalCache.Tests.csproj", "{65173F67-89FD-435B-A364-1E1F9C9D3056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItsMyConsole.Tools.GlobalCache.Sample", "ItsMyConsole.Tools.GlobalCache.Sample\ItsMyConsole.Tools.GlobalCache.Sample.csproj", "{A8818C73-914F-4E3A-80F6-FA84B5AEEE6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{318F8852-D77C-40F1-ABE1-7746A31F171C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{318F8852-D77C-40F1-ABE1-7746A31F171C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{318F8852-D77C-40F1-ABE1-7746A31F171C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{318F8852-D77C-40F1-ABE1-7746A31F171C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65173F67-89FD-435B-A364-1E1F9C9D3056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65173F67-89FD-435B-A364-1E1F9C9D3056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65173F67-89FD-435B-A364-1E1F9C9D3056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65173F67-89FD-435B-A364-1E1F9C9D3056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8818C73-914F-4E3A-80F6-FA84B5AEEE6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8818C73-914F-4E3A-80F6-FA84B5AEEE6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8818C73-914F-4E3A-80F6-FA84B5AEEE6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8818C73-914F-4E3A-80F6-FA84B5AEEE6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

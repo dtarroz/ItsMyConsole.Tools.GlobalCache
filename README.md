@@ -1,9 +1,11 @@
 ![Logo](docs/logo.png)
 
 # ItsMyConsole.Tools.GlobalCache
+
 Outil de cache global depuis toutes les interprétations de ligne de commande pour le Framework [```ItsMyConsole```](https://github.com/dtarroz/ItsMyConsole)
 
 ## Sommaire
+
 - [Pourquoi faire ?](#pourquoi-faire-)
 - [Getting Started](#getting-started)
 - [Comment se servir de l'outil ?](#comment-se-servir-de-loutil-)
@@ -12,6 +14,7 @@ Outil de cache global depuis toutes les interprétations de ligne de commande po
 - [Suppression des données du cache](#suppression-des-données-du-cache)
 
 ## Pourquoi faire ?
+
 Vous allez pouvoir étendre le Framework pour application Console .Net [```ItsMyConsole```](https://github.com/dtarroz/ItsMyConsole) avec un outil pour mettre en cache des données accessibles depuis toutes les interprétations de ligne de commande.
 
 L'outil ```ItsMyConsole.Tools.GlobalCache``` met à disposition :
@@ -20,14 +23,17 @@ L'outil ```ItsMyConsole.Tools.GlobalCache``` met à disposition :
  - La suppression des données du cache associés à une clé
 
 ## Getting Started
+
 1. Créer un projet **"Application Console .Net"** avec le nom *"MyExampleConsole"*
 2. Ajouter [```ItsMyConsole```](https://github.com/dtarroz/ItsMyConsole) au projet depuis le gestionnaire de package NuGet
 3. Ajouter ```ItsMyConsole.Tools.GlobalCache``` au projet depuis le gestionnaire de package NuGet
 4. Dans le projet, modifier la méthode **"Main"** dans le fichier **"Program.cs"** par le code suivant :
+
 ```cs
 using ItsMyConsole;
 using ItsMyConsole.Tools.GlobalCache;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MyExampleConsole
@@ -52,18 +58,18 @@ namespace MyExampleConsole
             ccli.AddCommand("^set (.+)$", RegexOptions.IgnoreCase, tools => 
             {
                 string value = tools.CommandMatch.Groups[1].Value;
-                if (tools.GlobalCache().TryGetValue<string>("<KEY>", out string oldValue))
-                    Console.WriteLine($"Old value: {oldValue}");  
+                if (tools.GlobalCache().TryGetValue("<KEY>", out string oldValue))
+                    Console.WriteLine($"Old value: {oldValue}");
                 tools.GlobalCache().Set("<KEY>", value);
                 Console.WriteLine("Global cache updated");
             });
-            
-            // Get the value in the global cache 
+
+            // Get the value in the global cache
             // Example : get
             ccli.AddCommand("^get$", RegexOptions.IgnoreCase, tools => 
             {
                 string value = tools.GlobalCache().Get<string>("<KEY>");
-                Console.WriteLine($"Value: {value}"); 
+                Console.WriteLine($"Value: {value}");
             });
 
             await ccli.RunAsync();
@@ -74,9 +80,9 @@ namespace MyExampleConsole
 
 Voici le résultat attendu lors de l'utilisation de la Console :
 
-![MyExampleProject](docs/MyExampleProject.png) 
+![MyExampleProject](docs/MyExampleProject.png)
 
-Dans cet exemple de code on a configuré avec ```Configure```, le prompt d’attente des commandes ```options.Prompt```, la présence d'un saut de ligne entre les saisies ```options.LineBreakBetweenCommands``` et l’en-tête affichée au lancement ```options.HeaderText```. 
+Dans cet exemple de code on a configuré avec ```Configure```, le prompt d’attente des commandes ```options.Prompt```, la présence d'un saut de ligne entre les saisies ```options.LineBreakBetweenCommands``` et l’en-tête affichée au lancement ```options.HeaderText```.
 
 Puis avec le premier ```AddCommand```, on a ajouté un pattern d’interprétation des lignes de commande ```^set (.+)$``` *(commence par **"set"** et suivi d'un texte)*  qui est insensible à la casse ```RegexOptions.IgnoreCase```.
 
@@ -149,7 +155,7 @@ Si la clé existe dans le cache, il retourne ```true``` avec son contenu dans ``
 ```cs
 ccli.AddCommand("<PATERN>", tools => 
 {
-    if (tools.GlobalCache().TryGetValue<string>("<KEY>", out string value))
+    if (tools.GlobalCache().TryGetValue("<KEY>", out string value))
     {
         // Insert your code here
     }
