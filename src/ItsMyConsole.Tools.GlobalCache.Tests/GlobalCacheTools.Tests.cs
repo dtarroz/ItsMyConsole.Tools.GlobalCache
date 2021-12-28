@@ -35,11 +35,11 @@ namespace ItsMyConsole.Tools.GlobalCache.Tests
 
         private static void CheckNoValue<T>(ref GlobalCacheTools globalCacheTools, string key) {
             T readGet = globalCacheTools.Get<T>(key);
-            Assert.Equal(default(T), readGet);
+            Assert.Equal(default, readGet);
 
             bool isExist = globalCacheTools.TryGetValue(key, out T readTryGet);
             Assert.False(isExist);
-            Assert.Equal(default(T), readTryGet);
+            Assert.Equal(default, readTryGet);
         }
 
         private static void SetValue<T>(ref GlobalCacheTools globalCacheTools, string key, T value) {
@@ -105,6 +105,20 @@ namespace ItsMyConsole.Tools.GlobalCache.Tests
             GlobalCacheTools globalCacheTools = new GlobalCacheTools();
 
             Assert.Throws<ArgumentException>(() => globalCacheTools.Get<object>(""));
+        }
+
+        [Fact]
+        public void TryGetValue_ArgumentNullException() {
+            GlobalCacheTools globalCacheTools = new GlobalCacheTools();
+
+            Assert.Throws<ArgumentNullException>(() => globalCacheTools.TryGetValue(null, out object _));
+        }
+
+        [Fact]
+        public void TryGetValue_ArgumentException() {
+            GlobalCacheTools globalCacheTools = new GlobalCacheTools();
+
+            Assert.Throws<ArgumentException>(() => globalCacheTools.TryGetValue("", out object _));
         }
 
         [Fact]
