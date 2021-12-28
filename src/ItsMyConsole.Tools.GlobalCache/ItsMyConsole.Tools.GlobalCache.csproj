@@ -13,7 +13,6 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>console cli cache</PackageTags>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
