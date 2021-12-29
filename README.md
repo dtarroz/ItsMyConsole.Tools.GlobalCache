@@ -88,7 +88,7 @@ Puis avec le premier ```AddCommand```, on a ajouté un pattern d’interprétati
 
 Et avec le deuxième ```AddCommand```, on a ajouté un pattern d’interprétation des lignes de commande ```^get$``` *(seulement **"get"**)*  qui est insensible à la casse ```RegexOptions.IgnoreCase```.
 
-Lors de l'exécution de la Console, si on saisit une commande qui commence par **"set"** avec la valeur à mettre en cache, il lancera l'implémentation de l'action associée (le premier ```AddCommand```). Il commence à lire le texte saisi (qui est la nouvelle valeur à mettre en cache) en utilisant ```tools.CommandMatch``` depuis les outils disponibles *(résultat du Match de l'expression régulière)*. Ensuite il récupére et vérifie si on a déjà une valeur en cache ```tools.GlobalCache().TryGetValue```, si c'est le cas, il affiche le résultat (*"Old value"*) puis il met à jour le cache avec la nouvelle valeur ```tools.GlobalCache().Set```.
+Lors de l'exécution de la Console, si on saisit une commande qui commence par **"set"** avec la valeur à mettre en cache, il lancera l'implémentation de l'action associée (le premier ```AddCommand```). Il commence à lire le texte saisi (qui est la nouvelle valeur à mettre en cache) en utilisant ```tools.CommandMatch``` depuis les outils disponibles *(résultat du Match de l'expression régulière)*. Ensuite il récupère et vérifie si on a déjà une valeur en cache ```tools.GlobalCache().TryGetValue```, si c'est le cas, il affiche le résultat (*"Old value"*) puis il met à jour le cache avec la nouvelle valeur ```tools.GlobalCache().Set```.
 
 Si on saisit la commande **"get"**, il lancera l'implémentation de l'action associée (le deuxième ```AddCommand```). Il lit le cache ```tools.GlobalCache().Get``` et affiche la valeur obtenue.
 
