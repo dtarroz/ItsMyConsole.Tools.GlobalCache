@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <None Include="..\..\docs\logo.png" Pack="true" PackagePath="" />
+    <None Remove="ItsMyConsole.Tools.GlobalCache.csproj.DotSettings" />
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
